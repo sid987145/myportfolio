@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import headerImg from "../assets/img/header-img.svg"; // Ensure you have this image path correct
 import { ArrowRightCircle } from 'react-bootstrap-icons';
@@ -10,42 +10,38 @@ export const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const [index, setIndex] = useState(1);
-  const toRotate = [ "IOS Developer", "Fullstack JS Developer", "Software Engineer" ];
+
+  // Memoize toRotate to prevent unnecessary re-renders
+  const toRotate = useMemo(() => ["IOS Developer", "Fullstack JS Developer", "Software Engineer"], []);
+
   const period = 2000;
 
   useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, delta);
+    const tick = () => {
+      let i = loopNum % toRotate.length;
+      let fullText = toRotate[i];
+      let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
 
-    return () => { clearInterval(ticker) };
-  }, [text])
+      setText(updatedText);
 
-  const tick = () => {
-    let i = loopNum % toRotate.length;
-    let fullText = toRotate[i];
-    let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
+      if (isDeleting) {
+        setDelta(prevDelta => prevDelta / 2);
+      }
 
-    setText(updatedText);
+      if (!isDeleting && updatedText === fullText) {
+        setIsDeleting(true);
+        setDelta(period);
+      } else if (isDeleting && updatedText === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+        setDelta(500);
+      }
+    };
 
-    if (isDeleting) {
-      setDelta(prevDelta => prevDelta / 2);
-    }
+    const ticker = setInterval(tick, delta);
 
-    if (!isDeleting && updatedText === fullText) {
-      setIsDeleting(true);
-      setIndex(prevIndex => prevIndex - 1);
-      setDelta(period);
-    } else if (isDeleting && updatedText === '') {
-      setIsDeleting(false);
-      setLoopNum(loopNum + 1);
-      setIndex(1);
-      setDelta(500);
-    } else {
-      setIndex(prevIndex => prevIndex + 1);
-    }
-  }
+    return () => clearInterval(ticker);
+  }, [text, delta, loopNum, isDeleting, toRotate, period]);
 
   return (
     <section className="banner" id="home">
@@ -54,24 +50,32 @@ export const Banner = () => {
           <Col xs={12} md={6} xl={7}>
             <TrackVisibility>
               {({ isVisible }) =>
-              <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                <span className="tagline">"Your Vision, My Code"</span>
-                <h1>{`Hi! I'm Siddharth Chaudhary`} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "IOS Developer", "Software Engineer", "Fullstack JS Developer" ]'><span className="wrap">{text}</span></span></h1>
+                <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+                  <span className="tagline">"Your Vision, My Code"</span>
+                  <h1>{`Hi! I'm Siddharth Chaudhary`} 
+                    <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "IOS Developer", "Software Engineer", "Fullstack JS Developer" ]'>
+                      <span className="wrap">{text}</span>
+                    </span>
+                  </h1>
                   <p>I am a passionate Developer seeking new opportunities. Committed to delivering high-quality products and driving continuous innovation.</p>
-                  <button onClick={() => window.open('https://linkedin.com/in/siddharth-chaudhary-7735aa157', '_blank')}>Let’s Connect <ArrowRightCircle size={25} /></button>
-              </div>}
+                  <button onClick={() => window.open('https://linkedin.com/in/siddharth-chaudhary-7735aa157', '_blank')}>
+                    Let’s Connect <ArrowRightCircle size={25} />
+                  </button>
+                </div>
+              }
             </TrackVisibility>
           </Col>
           <Col xs={12} md={6} xl={5}>
             <TrackVisibility>
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__zoomIn" : ""}>
-                  <img src={headerImg} alt="Header Img"/>
-                </div>}
+                  <img src={headerImg} alt="Header illustration featuring Siddharth Chaudhary" />
+                </div>
+              }
             </TrackVisibility>
           </Col>
         </Row>
       </Container>
     </section>
-  )
-}
+  );
+};
