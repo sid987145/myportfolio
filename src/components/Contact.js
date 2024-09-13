@@ -20,7 +20,7 @@ export const Contact = () => {
     setFormDetails({
       ...formDetails,
       [category]: value
-    })
+    });
   }
 
   const validateEmail = (email) => {
@@ -100,7 +100,17 @@ export const Contact = () => {
                         <input type="email" value={formDetails.email} placeholder="Email Address" onChange={(e) => onFormUpdate('email', e.target.value)} />
                       </Col>
                       <Col size={12} sm={6} className="px-1">
-                        <input type="tel" value={formDetails.phone} placeholder="Phone No." onChange={(e) => onFormUpdate('phone', e.target.value)} />
+                        <input 
+                          type="tel" 
+                          value={formDetails.phone} 
+                          placeholder="Phone No." 
+                          onChange={(e) => onFormUpdate('phone', e.target.value)} 
+                          onKeyDown={(e) => {
+                            if (!/[0-9]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                              e.preventDefault();
+                            }
+                          }}
+                        />
                       </Col>
                       <Col size={12} className="px-1">
                         <textarea rows="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
