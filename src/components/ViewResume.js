@@ -3,9 +3,8 @@ import { Col, Row, Button } from "react-bootstrap";
 import { WOW } from 'wowjs'; // Import WOW.js for animations
 
 export const ViewResume = () => {
-  const resumeLink = "https://drive.google.com/file/d/129sPx21SjwZBei6ZR_8Wu9drbalyCN2G/view?usp=drive_link";
-  const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=129sPx21SjwZBei6ZR_8Wu9drbalyCN2G";
-
+  const resumeLink = "https://drive.google.com/file/d/1PLZnwYLYOTq_qeaqr4jGNPoXBv_BnFNx/view?usp=drive_link";
+  const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=1PLZnwYLYOTq_qeaqr4jGNPoXBv_BnFNx";
   // Initialize WOW.js for animations
   useEffect(() => {
     new WOW().init();
