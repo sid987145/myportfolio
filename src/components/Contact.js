@@ -23,9 +23,32 @@ export const Contact = () => {
     })
   }
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/; // Adjust regex as needed
+    return phoneRegex.test(phone);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setButtonText("Sending...");
+
+    if (!validateEmail(formDetails.email)) {
+      setStatus({ success: false, message: 'Invalid email address' });
+      setButtonText("Send");
+      return;
+    }
+
+    if (!validatePhone(formDetails.phone)) {
+      setStatus({ success: false, message: 'Invalid phone number' });
+      setButtonText("Send");
+      return;
+    }
+
     let response = await fetch("https://sidportfoliobackend.onrender.com/contact", {
       method: "POST",
       headers: {
@@ -33,6 +56,7 @@ export const Contact = () => {
       },
       body: JSON.stringify(formDetails),
     });
+
     setButtonText("Send");
     let result = await response.json();
     setFormDetails(formInitialDetails);
