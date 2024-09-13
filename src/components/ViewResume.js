@@ -5,6 +5,7 @@ import { WOW } from 'wowjs'; // Import WOW.js for animations
 export const ViewResume = () => {
   const resumeLink = "https://drive.google.com/file/d/1PLZnwYLYOTq_qeaqr4jGNPoXBv_BnFNx/view?usp=drive_link";
   const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=1PLZnwYLYOTq_qeaqr4jGNPoXBv_BnFNx";
+
   // Initialize WOW.js for animations
   useEffect(() => {
     new WOW().init();
@@ -35,6 +36,11 @@ export const ViewResume = () => {
                   className="btn btn-secondary"
                   rel="noopener noreferrer"
                   aria-label="Download Resume"
+                  onClick={(e) => {
+                    // Prevent default action and handle download
+                    e.preventDefault();
+                    window.location.href = resumeDownloadLink;
+                  }}
                 >
                   Download Resume
                 </a>
