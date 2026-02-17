@@ -26,14 +26,15 @@ export const Skills = () => {
   };
 
   const skills = [
-    { img: meter1, label: "C++" },
     { img: meter2, label: "JavaScript" },
-    { img: meter2, label: "Swift" },
-    { img: meter3, label: "Kotlin" },
+    { img: meter2, label: "Python" },
+    { img: meter1, label: "HTML" },
+    { img: meter1, label: "CSS" },
     { img: meter1, label: "React JS" },
     { img: meter1, label: "Node JS" },
     { img: meter1, label: "Xcode" },
-    { img: meter2, label: "Android Studio" },
+    { img: meter2, label: "Swift" },
+    { img: meter2, label: "GCP" },
     { img: meter3, label: "OOPS" },
     { img: meter1, label: "Data Structures" },
     { img: meter2, label: "Research & Development" },

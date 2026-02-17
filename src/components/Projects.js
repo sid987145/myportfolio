@@ -8,11 +8,23 @@ import projImg5 from "../assets/img/gallery.png";
 import projImg6 from "../assets/img/speech.png";
 import projImg7 from "../assets/img/droide.jpeg";
 import colorSharp2 from "../assets/img/color-sharp2.png";
+import smartclip from "../assets/img/Smart Clip.png";
+import dataSettle from "../assets/img/Data Settle.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 
 export const Projects = () => {
   const projects = [
+    {
+      title: "Data Settle",
+      description: "An online platform for data monetization and exchange",
+      imgUrl: dataSettle,
+    },
+    {
+      title: "Smart Clip",
+      description: "An innovative video clipping and sharing platform",
+      imgUrl: smartclip,
+    },
     {
       title: "UPAJ - Kisan ka Super App",
       description: "Application Development",
@@ -47,16 +59,6 @@ export const Projects = () => {
       title: "BB-8: The Fascinating Robot from Star Wars [NK-Learnicare Winner]",
       description: "Design & Development",
       imgUrl: projImg7,
-    },
-    {
-      title: "UPAJ - Kisan ka Super App",
-      description: "Application Development",
-      imgUrl: projImg1,
-    },
-    {
-      title: "iTrade - An online platform for agricultural commodity trading",
-      description: "Application Development",
-      imgUrl: projImg2,
     }
   ];
 
